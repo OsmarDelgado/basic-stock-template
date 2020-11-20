@@ -1,0 +1,11 @@
+{
+  "name": "catsuite",
+  "version": "1.0.0",
+  "description": "Stock module for ERP Catsuite",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Osmar",
+  "license": "MIT"
+}

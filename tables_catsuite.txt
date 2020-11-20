@@ -1,0 +1,38 @@
+DB SEMAGEN
+
+	SALES MODULE
+		- QUOTATIONS TABLES
+			-> Quotation
+			-> Concept
+			-> Subconcept
+			-> Pasis (Products and Services in Subconcept)
+			
+	API GATEWAY MODULE	
+		- USERS AND COMPANIES TABLES
+			-> User
+			-> Role
+			-> Company
+			-> Address
+			-> Client
+			-> Provider
+	
+	STOCK MODULE
+		- STOCK TABLES
+			-> Stock
+			-> InputStock
+			-> InputStockSupply
+			-> OutputStock
+			-> OutputStockSupply
+			-> AdjustInputStock
+			-> AdjustInputStockSupply
+			-> AdjustOutputStock
+			-> AdjustOutputStockSupply
+		
+		- PRODUCTS AND SERVICES TABLES
+			-> Supply
+			-> Brand
+			-> TypeSupply
+			-> Category
+			-> Price
+			-> Tax
+			-> UnitMeasure

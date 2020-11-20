@@ -1,0 +1,16 @@
+psql \
+   --host=<DB instance endpoint> \
+   --port=<port> \
+   --username=<master username> \
+   --password \
+   --dbname=<database name> 
+
+psql \
+   --host= \
+   --port=5432 \
+   --username=catsuite \
+   --password \
+   --dbname=postgres 
+
+DB identifier: catsuite-semagen-stock
+DB pass = Catsuite2020
