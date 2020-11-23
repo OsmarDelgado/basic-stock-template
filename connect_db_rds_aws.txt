@@ -6,7 +6,7 @@ psql \
    --dbname=<database name> 
 
 psql \
-   --host= \
+   --host=catsuite-semagen-stock.c7pv1aw1xwps.us-east-1.rds.amazonaws.com \
    --port=5432 \
    --username=catsuite \
    --password \
