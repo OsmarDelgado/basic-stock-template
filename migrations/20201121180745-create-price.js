@@ -12,7 +12,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       id_supply: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Supplies',
+          key: 'id', 
+          as: 'id_supply'
+        }
       },
       price: {
         type: Sequelize.DECIMAL

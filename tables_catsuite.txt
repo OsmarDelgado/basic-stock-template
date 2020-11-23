@@ -19,6 +19,8 @@ DB SEMAGEN
 	STOCK MODULE
 		- STOCK TABLES
 			-> Stock
+			-> Tax
+			-> Price
 			-> InputStock
 			-> InputStockSupply
 			-> OutputStock
@@ -33,6 +35,4 @@ DB SEMAGEN
 			-> Brand
 			-> TypeSupply
 			-> Category
-			-> Price
-			-> Tax
 			-> UnitMeasure

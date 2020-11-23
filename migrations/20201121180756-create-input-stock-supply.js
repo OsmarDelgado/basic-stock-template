@@ -9,19 +9,42 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       id_input_stock: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'InputStocks',
+          key: 'id', 
+          as: 'id_input_stock'
+        }
       },
       id_supply: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Supplies',
+          key: 'id', 
+          as: 'id_supply'
+        }
       },
       quantity: {
         type: Sequelize.INTEGER
       },
       id_unit_measure: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'UnitMeasures',
+          key: 'id', 
+          as: 'id_unit_measure'
+        }
       },
       unit_price: {
         type: Sequelize.DECIMAL
+      },
+      id_tax: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Taxes',
+          key: 'id', 
+          as: 'id_tax'
+        }
       },
       total_tax: {
         type: Sequelize.DECIMAL

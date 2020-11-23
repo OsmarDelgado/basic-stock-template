@@ -11,6 +11,21 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      InputStockSupply.belongsTo(models.InputStock, {
+        foreignKey: 'id_input_stock',
+      });
+      
+      InputStockSupply.hasMany(models.Supply, {
+        foreignKey: 'id_supply',
+      });
+
+      InputStockSupply.belongsTo(models.UnitMeasure, {
+        foreignKey: 'id_unit_measure',
+      });
+
+      InputStockSupply.belongsTo(models.Tax, {
+        foreignKey: 'id_tax',
+      });
     }
   };
   InputStockSupply.init({
@@ -19,6 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     quantity: DataTypes.INTEGER,
     id_unit_measure: DataTypes.INTEGER,
     unit_price: DataTypes.DECIMAL,
+    id_tax: DataTypes.INTEGER,
     total_tax: DataTypes.DECIMAL,
     total: DataTypes.DECIMAL,
     active: DataTypes.BOOLEAN

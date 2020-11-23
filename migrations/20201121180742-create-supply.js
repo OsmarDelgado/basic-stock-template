@@ -11,14 +11,37 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
+      id_unit_measure: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'UnitMeasures',
+          key: 'id', 
+          as: 'id_unit_measure'
+        }
+      },
       id_category: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Categories',
+          key: 'id', 
+          as: 'id_category'
+        }
       },
       id_brand: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Brands',
+          key: 'id', 
+          as: 'id_brand'
+        }
       },
       id_type_supply: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'TypeSupplies',
+          key: 'id', 
+          as: 'id_type_supply'
+        }
       },
       active: {
         type: Sequelize.BOOLEAN

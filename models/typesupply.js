@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      TypeSupply.hasOne(models.Supply, {
+        foreignKey: 'id_type_supply',
+      });
     }
   };
   TypeSupply.init({
