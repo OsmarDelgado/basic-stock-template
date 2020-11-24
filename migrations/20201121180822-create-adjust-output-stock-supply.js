@@ -9,16 +9,31 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       id_adjust_output: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'AdjustOutputStocks',
+          key: 'id', 
+          as: 'id_adjust_output'
+        }
       },
       id_supply: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Supplies',
+          key: 'id', 
+          as: 'id_supply'
+        }
       },
       quantity: {
         type: Sequelize.INTEGER
       },
       id_unit_measure: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'UnitMeasures',
+          key: 'id', 
+          as: 'id_unit_measure'
+        }
       },
       active: {
         type: Sequelize.BOOLEAN

@@ -18,6 +18,22 @@ module.exports = (sequelize, DataTypes) => {
       UnitMeasure.hasOne(models.InputStockSupply, {
         foreignKey: 'id_unit_measure',
       });
+
+      UnitMeasure.hasOne(models.OutputStockSupply, {
+        foreignKey: 'id_unit_measure',
+      });
+
+      UnitMeasure.hasOne(models.AdjustInputStockSupply, {
+        foreignKey: 'id_unit_measure',
+      });
+
+      UnitMeasure.hasOne(models.AdjustOutputStockSupply, {
+        foreignKey: 'id_unit_measure',
+      });
+      
+      UnitMeasure.hasOne(models.Stock, {
+        foreignKey: 'id_unit_measure',
+      });
     }
   };
   UnitMeasure.init({

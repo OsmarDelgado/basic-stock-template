@@ -11,6 +11,9 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      OutputStock.belongsTo(models.OutputStockSupply, {
+        foreignKey: 'id_output_stock',
+      });
     }
   };
   OutputStock.init({

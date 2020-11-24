@@ -11,6 +11,17 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      AdjustInputStockSupply.hasOne(models.AdjustInputStock, {
+        foreignKey: 'id_adjust_input',
+      });
+      
+      AdjustInputStockSupply.hasMany(models.Supply, {
+        foreignKey: 'id_supply',
+      });
+
+      AdjustInputStockSupply.belongsTo(models.UnitMeasure, {
+        foreignKey: 'id_unit_measure',
+      });
     }
   };
   AdjustInputStockSupply.init({

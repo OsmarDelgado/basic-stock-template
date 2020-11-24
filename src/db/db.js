@@ -1,7 +1,7 @@
 import Sequilize from 'sequelize';
 
 export const sequelize = new Sequilize(
-    'test',                    // db name
+    'test_2',                    // db name
     'test',                    // user
     'Osmar1995',          // For AWS RDS Postgrtesql instance
     {

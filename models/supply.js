@@ -34,6 +34,22 @@ module.exports = (sequelize, DataTypes) => {
       Supply.belongsTo(models.InputStockSupply, {
         foreignKey: 'id_input_stock',
       });
+
+      Supply.belongsTo(models.OutputStockSupply, {
+        foreignKey: 'id_output_stock',
+      });
+
+      Supply.belongsTo(models.AdjustInputStockSupply, {
+        foreignKey: 'id_adjust_input_stock',
+      });
+
+      Supply.belongsTo(models.AdjustOutputStockSupply, {
+        foreignKey: 'id_output_stock',
+      });
+      
+      Supply.hasOne(models.Stock, {
+        foreignKey: 'id_supply',
+      });
     }
   };
   Supply.init({
