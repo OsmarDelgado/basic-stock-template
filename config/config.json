@@ -1,8 +1,8 @@
 {
   "development": {
-    "username": "catsuite",
-    "password": "Catsuite2020",
-    "database": "test_2",
+    "username": "test",
+    "password": "Osmar1995",
+    "database": "test",
     "host": "catsuite-semagen-stock.c7pv1aw1xwps.us-east-1.rds.amazonaws.com",
     "dialect": "postgres"
   },

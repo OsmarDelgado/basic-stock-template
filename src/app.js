@@ -5,7 +5,7 @@ import morgan from 'morgan';                // Import Morgan
 import pkg from '../package.json';          // Import as pkg the package.json
 
 // IMPORTS ROUTES
-
+import brandRoutes from './routes/brand';
 
 // Initialization
 const app = express();
@@ -20,7 +20,7 @@ app.use( express.json() );
 app.use( express.urlencoded({ extended : false }) );
 
 // ROUTES
-
+app.use( '/api/brands', brandRoutes );
 
 // GET home
 app.get('/', (req, res) => {
