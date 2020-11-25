@@ -1,5 +1,6 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../db/db';
+import Supply from './Supply';
 
 const UnitMeasure = sequelize.define( 'unitmeasures', {
     id : {
@@ -20,5 +21,9 @@ const UnitMeasure = sequelize.define( 'unitmeasures', {
     timestamps : true,
     tableName: "UnitMeasures"
 } );
+
+// Unit Measure Foreign Key
+UnitMeasure.hasOne( Supply, { foreignKey : 'id_unit_measure', sourceKey : 'id' } );
+Supply.belongsTo( UnitMeasure, { foreignKey : 'id_unit_measure', sourceKey : 'id' } );
 
 export default UnitMeasure;
