@@ -9,8 +9,8 @@ export const getCategories = async ( req, res ) => {
                 active : true
             }
         } );
-        if( categories === '' ) {
-            res.status(204).json( {
+        if( categories == '' ) {
+            res.status(200).json( {
                 message : "There are not categories yet"
             } );
         } else {
@@ -33,7 +33,8 @@ export const getCategoryById = async ( req, res ) => {
     const { id_category } = req.params;
     const category = await Category.findOne( {
         where : {
-            id : id_category
+            id : id_category,
+            active : true
         }
     } );
 

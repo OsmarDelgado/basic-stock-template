@@ -9,8 +9,8 @@ export const getBrands = async ( req, res ) => {
                 active : true
             }
         } );
-        if( brands === '' ) {
-            res.status(204).json( {
+        if( brands == '' ) {
+            res.status(200).json( {
                 message : "There are not brands yet"
             } );
         } else {
@@ -33,7 +33,8 @@ export const getBrandById = async ( req, res ) => {
     const { id_brand } = req.params;
     const brand = await Brand.findOne( {
         where : {
-            id : id_brand
+            id : id_brand,
+            active : true
         }
     } );
     

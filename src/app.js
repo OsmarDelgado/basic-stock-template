@@ -7,6 +7,8 @@ import pkg from '../package.json';          // Import as pkg the package.json
 // IMPORTS ROUTES
 import brandRoutes from './routes/brand';
 import categoryRoutes from './routes/category';
+import typeSupplyRoutes from './routes/typesupply';
+import unitMeasureRoutes from './routes/unitmeasure';
 
 // Initialization
 const app = express();
@@ -21,8 +23,10 @@ app.use( express.json() );
 app.use( express.urlencoded({ extended : false }) );
 
 // ROUTES
-app.use( '/api/brands', brandRoutes );      // Routes Brands
-app.use( '/api/categories', categoryRoutes );      // Routes Categories
+app.use( '/api/brands', brandRoutes );                  // Routes Brands
+app.use( '/api/categories', categoryRoutes );           // Routes Categories
+app.use( '/api/type_supplies', typeSupplyRoutes );      // Routes Categories
+app.use( '/api/unit_measures', unitMeasureRoutes );     // Routes Categories
 
 // GET home
 app.get('/', (req, res) => {
