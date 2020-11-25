@@ -9,11 +9,16 @@ export const getBrands = async ( req, res ) => {
                 active : true
             }
         } );
-        console.log( brands );
-        res.json( {
-            message : "Brands",
-            data : brands
-        } );
+        if( brands === '' ) {
+            res.status(204).json( {
+                message : "There are not brands yet"
+            } );
+        } else {
+            res.status(200).json( {
+                message : "Brands",
+                data : brands
+            } );
+        }
     } catch (error) {
         res.status(500).json( {
             message : "Somenthing was wrong",
@@ -31,6 +36,7 @@ export const getBrandById = async ( req, res ) => {
             id : id_brand
         }
     } );
+    
     if( brand != null ) {
         return res.status(200).json( {
             message : "Brand",
@@ -85,7 +91,7 @@ export const updateBrand = async ( req, res ) => {
             }
         } );
 
-        return res.status(200).json( {
+        return res.status(204).json( {
             message : "Brand updated succesfully",
             data : updateBrand
         } );
@@ -113,7 +119,7 @@ export const deleteBrand = async ( req, res ) => {
             }
         } );
 
-        return res.status(200).json( {
+        return res.status(204).json( {
             message : "Brand deleted succesfully",
             data : deleteBrand
         } );
