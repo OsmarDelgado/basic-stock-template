@@ -10,6 +10,7 @@ module.exports = {
       },
       id_adjust_output: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'AdjustOutputStocks',
           key: 'id', 
@@ -18,6 +19,7 @@ module.exports = {
       },
       id_supply: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Supplies',
           key: 'id', 
@@ -25,10 +27,12 @@ module.exports = {
         }
       },
       quantity: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       id_unit_measure: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'UnitMeasures',
           key: 'id', 

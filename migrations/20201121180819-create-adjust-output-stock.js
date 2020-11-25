@@ -9,7 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       date_adjust: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false,
       },
       notes: {
         type: Sequelize.TEXT

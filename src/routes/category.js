@@ -6,6 +6,9 @@ const router = Router();
 // Get all Categories
 router.get( '/', categoryCtrl.getCategories );
 
+// Get all Categories deactivated
+router.get( '/deactivated/', categoryCtrl.getCategoriesDeactivated );
+
 // Get a Category by Id
 router.get( '/:id_category', categoryCtrl.getCategoryById );
 
@@ -15,7 +18,10 @@ router.post( '/', categoryCtrl.createCategory );
 // Update a Category
 router.put( '/:id_category', categoryCtrl.updateCategory );
 
-// Delete a Category
-router.delete( '/:id_category', categoryCtrl.deleteCategory );
+// Deactivate a Category
+router.delete( '/:id_category', categoryCtrl.deactivateCategory );
+
+// Reactivate a Category
+router.patch( '/deactivated/:id_category', categoryCtrl.reactiveCategory );
 
 export default router;

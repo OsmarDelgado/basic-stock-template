@@ -6,6 +6,9 @@ const router = Router();
 // Get all Type Supply
 router.get( '/', typeSupplyCtrl.getTypeSupply );
 
+// Get all Type Supplies deactivated
+router.get( '/deactivated/', typeSupplyCtrl.getTypeSupplyDeactivated );
+
 // Get a Type Supply by Id
 router.get( '/:id_type_supply', typeSupplyCtrl.getTypeSupplyById );
 
@@ -15,7 +18,10 @@ router.post( '/', typeSupplyCtrl.createTypeSupply );
 // Update a Type Supply
 router.put( '/:id_type_supply', typeSupplyCtrl.updateTypeSupply );
 
-// Delete a Type Supply
-router.delete( '/:id_type_supply', typeSupplyCtrl.deleteTypeSupply );
+// Deactivate a Category
+router.delete( '/:id_type_supply', typeSupplyCtrl.deactivateTypeSupply );
+
+// Reactivate a Category
+router.patch( '/deactivated/:id_type_supply', typeSupplyCtrl.reactiveTypeSupply );
 
 export default router;

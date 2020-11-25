@@ -9,6 +9,8 @@ const Brand = sequelize.define( 'brands', {
     },
     name : {
         type : Sequelize.STRING,
+        allowNull: false,
+        unique: true
     },
     active : {
         type : Sequelize.BOOLEAN,

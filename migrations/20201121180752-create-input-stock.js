@@ -9,10 +9,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       date_input: {
-        type: Sequelize.DATE
+        type: Sequelize.DATE,
+        allowNull: false,
       },
       id_provider: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       subtotal: {
         type: Sequelize.DECIMAL

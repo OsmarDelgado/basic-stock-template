@@ -9,10 +9,13 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       name: {
-        type: Sequelize.STRING
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true
       },
       id_unit_measure: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'UnitMeasures',
           key: 'id', 
@@ -21,6 +24,7 @@ module.exports = {
       },
       id_category: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Categories',
           key: 'id', 
@@ -29,6 +33,7 @@ module.exports = {
       },
       id_brand: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Brands',
           key: 'id', 
@@ -37,6 +42,7 @@ module.exports = {
       },
       id_type_supply: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'TypeSupplies',
           key: 'id', 

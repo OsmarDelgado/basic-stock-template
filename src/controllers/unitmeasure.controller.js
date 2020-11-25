@@ -10,17 +10,44 @@ export const getUnitMeasures = async ( req, res ) => {
             }
         } );
         if( unit_measures == '' ) {
-            res.status(200).json( {
+            return res.status(200).json( {
                 message : "There are not unit measure yet"
             } );
         } else {
-            res.status(200).json( {
+            return res.status(200).json( {
                 message : "Unit Measure",
                 data : unit_measures
             } );
         }
     } catch (error) {
-        res.status(500).json( {
+        return res.status(500).json( {
+            message : "Somenthing was wrong",
+            data : {}
+        } );
+    }
+};
+
+// Get all Unit Measures deactivated
+export const getUnitMeasuresDeactivated = async ( req, res ) => {
+    // res.send( 'Get all unit measures deactivated' );
+    try {
+        const unit_measures = await UnitMeasure.findAll( {
+            where : {
+                active : false
+            }
+        } );
+        if( unit_measures == '' ) {
+            return res.status(200).json( {
+                message : "There are not unit measures deactivated"
+            } );
+        } else {
+            return res.status(200).json( {
+                message : "Unit measure deactivated",
+                data : unit_measures
+            } );
+        }
+    } catch (error) {
+        return res.status(500).json( {
             message : "Somenthing was wrong",
             data : {}
         } );
@@ -44,7 +71,7 @@ export const getUnitMeasureById = async ( req, res ) => {
             data : unit_measure
         } );
     } else {
-        res.status(404).json( {
+        return res.status(404).json( {
             message : "Unit Measure does not exist",
             data : {}
         } );
@@ -56,20 +83,39 @@ export const createUnitMeasure = async ( req, res ) => {
     // res.send( 'Create unit measure' );
     const { name } = req.body;
     try {
-        const newUnitMeasure = await UnitMeasure.create( {
-            name
-        }, {
-            fields : [ 'name', 'active' ]
+        const unit_measure = await UnitMeasure.findOne( {
+            attributes : [ 'name', 'active' ],
+            where : {
+                name
+            }
         } );
-
-        if( newUnitMeasure ) {
-            return res.status(201).json( {
-                message : "Unit Measure created succesfully",
-                data : newUnitMeasure
+        if( unit_measure && unit_measure.active === true ) {
+            return res.status(409).json( {
+                message : "Unit measure does exist",
+                data : unit_measure
             } );
+        } else if ( unit_measure && unit_measure.active === false ) {
+            return res.status(409).json( {
+                message : "Unit measure is inactive",
+                data : unit_measure
+            } );
+        } else {
+            const newUnitMeasure = await UnitMeasure.create( {
+                name,
+            }, {
+                fields : [ 'name', 'active' ]
+            } );
+    
+            if( newUnitMeasure ) {
+                return res.status(201).json( {
+                    message : "Unit measure created succesfully",
+                    data : newUnitMeasure
+                } );
+            }
         }
     } catch (error) {
-        res.status(500).json( {
+        console.log( error );
+        return res.status(500).json( {
             message : "Something goes wrong",
             data : {}
         } );
@@ -83,49 +129,123 @@ export const updateUnitMeasure = async ( req, res ) => {
     const { name } = req.body;
 
     try {
-        const updateUnitMeasure = await UnitMeasure.update( {
-            name
-        }, {
-            attributes : ['name', 'active'],
+        const unit_measure = await UnitMeasure.findOne( {
+            attributes : [ 'name' ],
             where : {
-                id : id_unit_measure
+                name,
+                active : true
             }
         } );
 
-        return res.status(204).json( {
-            message : "Unit Measure updated succesfully",
-            data : updateUnitMeasure
-        } );
+        if( name === unit_measure.name ) {
+            return res.status(409).json( {
+                message : "Unit Measure does exist",
+                data : unit_measure
+            } );
+        } else {
+            const updateUnitMeasure = await UnitMeasure.update( {
+                name
+            }, {
+                attributes : ['name', 'active'],
+                where : {
+                    id : id_unit_measure
+                }
+            } );
+
+            return res.status(204).json( {
+                message : "Unit Measure updated succesfully",
+                data : updateUnitMeasure
+            } );
+        }
     } catch (error) {
-        res.status(500).json( {
+        return res.status(500).json( {
             message : "Something was wrong",
             data : {}
         } );
     }
 };
 
-// Delete a Unit Measures
-export const deleteUnitMeasure = async ( req, res ) => {
+// Deactivate a Unit Measure
+export const deactivateUnitMeasure = async ( req, res ) => {
     // res.send( 'Deactivate a unit measure' );
     const { id_unit_measure } = req.params;
     const active = false;
 
     try {
-        const deleteUnitMeasure = await UnitMeasure.update( {
-            active
-        }, {
-            attributes : [ 'active' ],
+        const unit_measure = await UnitMeasure.findOne( {
+            attributes : [ 'id' ],
             where : {
-                id : id_unit_measure
+                id : id_unit_measure,
+                active : true
             }
         } );
 
-        return res.status(204).json( {
-            message : "Unit Measure deleted succesfully",
-            data : deleteUnitMeasure
-        } );
+        if( unit_measure === null ) {
+            return res.status(400).json( {
+                message : "Bad request",
+                data : {}
+            } );
+        } else {
+            const deleteUnitMeasure = await UnitMeasure.update( {
+                active
+            }, {
+                attributes : [ 'active' ],
+                where : {
+                    id : id_unit_measure
+                }
+            } );
+
+            return res.status(204).json( {
+                message : "Unit measure deleted succesfully",
+                data : deleteUnitMeasure
+            } );
+        }
     } catch (error) {
-        res.status(500).json( {
+        return res.status(500).json( {
+            message : "Something was wrong",
+            data : {}
+        } );
+    }
+};
+
+// Reactivate a Unit Measure
+export const reactiveUnitMeasure = async ( req, res ) => {
+    // res.send('Reactive unit measure');
+    const { id_unit_measure } = req.params;
+    const active = true;
+
+    try {
+        const unit_measure = await UnitMeasure.findOne( {
+            attributes : [ 'id', 'active' ],
+            where : {
+                id : id_unit_measure,
+                active : false
+            }
+        } );
+
+        if( unit_measure === null ) {
+            return res.status(400).json( {
+                message : "Bad request",
+                data : {}
+            } );
+        } else {
+            const reactiveUnitMeasure = await UnitMeasure.update( {
+                active
+            }, {
+                attributes : [ 'active' ],
+                where : {
+                    id : id_unit_measure
+                }
+            } );
+
+            return res.status(204).json( {
+                message : "Unit measure reactivated succesfully",
+                data : reactiveUnitMeasure
+            } );
+        }
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json( {
             message : "Something was wrong",
             data : {}
         } );

@@ -9,10 +9,12 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       id_provider: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        allowNull: false,
       },
       id_supply: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'Supplies',
           key: 'id', 
@@ -20,7 +22,8 @@ module.exports = {
         }
       },
       price: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.DECIMAL,
+        allowNull: false,
       },
       active: {
         type: Sequelize.BOOLEAN

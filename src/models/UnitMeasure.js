@@ -8,7 +8,9 @@ const UnitMeasure = sequelize.define( 'unitmeasures', {
         autoIncrement: true
     },
     name : {
-        type : Sequelize.STRING
+        type : Sequelize.STRING,
+        allowNull: false,
+        unique: true
     },
     active : {
         type : Sequelize.BOOLEAN,
