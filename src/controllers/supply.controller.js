@@ -81,7 +81,6 @@ export const getSupplyById = async ( req, res ) => {
 export const createSupply = async ( req, res ) => {
     // res.send( 'Create a supply' );
     const { name, id_unit_measure, id_category, id_brand, id_type_supply } = req.body;
-
     try {
         const supply = Supply.findOne( {
             attributes : [ 'name', 'id_unit_measure', 'id_category', 'id_brand', 'id_type_supply' ],

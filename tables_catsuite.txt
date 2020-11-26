@@ -36,3 +36,4 @@ DB SEMAGEN
 			-> TypeSupply
 			-> Category
 			-> UnitMeasure
+			-> CategorySupplyList
