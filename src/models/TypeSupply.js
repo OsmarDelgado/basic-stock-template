@@ -23,7 +23,7 @@ const TypeSupply = sequelize.define( 'typesupplies', {
 } );
 
 // Type Supply Foreign Key
-TypeSupply.hasOne( Supply, { foreignKey : 'id_type_supply', sourceKey : 'id' } );
+TypeSupply.hasMany( Supply, { foreignKey : 'id_type_supply', sourceKey : 'id' } );
 Supply.belongsTo( TypeSupply, { foreignKey : 'id_type_supply', sourceKey : 'id' } );
 
 export default TypeSupply;

@@ -10,7 +10,7 @@ export const getCategories = async ( req, res ) => {
             }
         } );
         if( categories == '' ) {
-            return res.status(200).json( {
+            return res.status(404).json( {
                 message : "There are not categories yet"
             } );
         } else {
@@ -37,7 +37,7 @@ export const getCategoriesDeactivated = async ( req, res ) => {
             }
         } );
         if( categories == '' ) {
-            return res.status(200).json( {
+            return res.status(404).json( {
                 message : "There are not categories deactivated"
             } );
         } else {

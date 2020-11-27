@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../db/db';
-import Supply from './Supply';
+import SupplyBrands from './SupplyBrands';
 
 const Brand = sequelize.define( 'brands', {
     id : {
@@ -23,7 +23,7 @@ const Brand = sequelize.define( 'brands', {
 } );
 
 // Brand Foreign Key
-Brand.hasMany( Supply, { foreignKey : 'id_brand', sourceKey : 'id' } );
-Supply.belongsTo( Brand, { foreignKey : 'id_brand', sourceKey : 'id' } );
+Brand.hasMany( SupplyBrands, { foreignKey : 'id_brand', sourceKey : 'id' } );
+SupplyBrands.belongsTo( Brand, { foreignKey : 'id_brand', sourceKey : 'id' } );
 
 export default Brand;

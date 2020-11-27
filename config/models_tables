@@ -1,23 +1,30 @@
+PRODUCTS AND SERVICES (SUPPLIES)-----------------------------------------------------------------------------------------------------------------------------
+
 -> Brand
     sequelize model:generate --name Brand --attributes 'name:string active:boolean'
-
--> TypeSupply
-    sequelize model:generate --name TypeSupply --attributes 'name:string active:boolean'
 
 -> Category
     sequelize model:generate --name Category --attributes 'name:string active:boolean'
 
--> Tax
-    sequelize model:generate --name Tax --attributes 'name:string value:integer active:boolean'
+-> TypeSupply
+    sequelize model:generate --name TypeSupply --attributes 'name:string active:boolean'
 
 -> UnitMeasure
     sequelize model:generate --name UnitMeasure --attributes 'name:string active:boolean'
 
 -> Supply
-    sequelize model:generate --name Supply --attributes 'name:string id_category:integer id_brand:integer id_type_supply:integer active:boolean'
+    sequelize model:generate --name Supply --attributes 'name:string id_unit_measure:integer id_category:integer id_type_supply:integer active:boolean'
 
--> Price
-    sequelize model:generate --name Price --attributes 'id_provider:integer id_supply:integer price:decimal active:boolean'
+-> SupplyBrand
+    sequelize model:generate --name SupplyBrands --attributes 'id_supply:integer id_brand:integer active:boolean'
+
+-> SupplyPrice
+    sequelize model:generate --name SupplyPrice --attributes 'id_supply:integer id_provider:integer price:decimal active:boolean'
+
+STOCK--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+-> Tax
+    sequelize model:generate --name Tax --attributes 'name:string value:integer active:boolean'
 
 -> Stock
     sequelize model:generate --name Stock --attributes 'id_supply:integer quantity:integer id_unit_measure:integer last_cost:decimal average_cost:decimal last_price:decimal average_price:decimal active:boolean'

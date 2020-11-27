@@ -1,17 +1,26 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('UnitMeasures', {
+    await queryInterface.createTable('SupplyPrices', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true
+      id_supply: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Supplies',
+          key: 'id', 
+          as: 'id_supply'
+        }
+      },
+      id_provider: {
+        type: Sequelize.INTEGER,
+      },
+      price: {
+        type: Sequelize.DECIMAL
       },
       active: {
         type: Sequelize.BOOLEAN
@@ -27,6 +36,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('UnitMeasures');
+    await queryInterface.dropTable('SupplyPrices');
   }
 };

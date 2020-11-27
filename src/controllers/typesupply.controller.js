@@ -10,7 +10,7 @@ export const getTypeSupply = async ( req, res ) => {
             }
         } );
         if( type_supplies == '' ) {
-            return res.status(200).json( {
+            return res.status(404).json( {
                 message : "There are not type supplies yet"
             } );
         } else {
@@ -37,7 +37,7 @@ export const getTypeSupplyDeactivated = async ( req, res ) => {
             }
         } );
         if( type_supplies == '' ) {
-            return res.status(200).json( {
+            return res.status(404).json( {
                 message : "There are not type supplies deactivated"
             } );
         } else {

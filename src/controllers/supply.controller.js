@@ -1,4 +1,6 @@
 import Supply from '../models/Supply';
+import SupplyBrands from '../models/SupplyBrands';
+import SupplyPrices from '../models/SupplyPrices';
 
 // Get all Supplies
 export const getSupplies = async ( req, res ) => {
@@ -10,7 +12,7 @@ export const getSupplies = async ( req, res ) => {
             }
         } );
         if( supplies == '' ) {
-            return res.status(200).json( {
+            return res.status(404).json( {
                 message : "There are not supplies yet"
             } );
         } else {
@@ -36,7 +38,7 @@ export const getSuppliesDeactivated = async ( req, res ) => {
             }
         } );
         if( supplies == '' ) {
-            return res.status(200).json( {
+            return res.status(404).json( {
                 message : "There are not supplies deactivated"
             } );
         } else {

@@ -23,7 +23,7 @@ const UnitMeasure = sequelize.define( 'unitmeasures', {
 } );
 
 // Unit Measure Foreign Key
-UnitMeasure.hasOne( Supply, { foreignKey : 'id_unit_measure', sourceKey : 'id' } );
+UnitMeasure.hasMany( Supply, { foreignKey : 'id_unit_measure', sourceKey : 'id' } );
 Supply.belongsTo( UnitMeasure, { foreignKey : 'id_unit_measure', sourceKey : 'id' } );
 
 export default UnitMeasure;

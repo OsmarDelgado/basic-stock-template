@@ -10,7 +10,7 @@ export const getBrands = async ( req, res ) => {
             }
         } );
         if( brands == '' ) {
-            return res.status(200).json( {
+            return res.status(404).json( {
                 message : "There are not brands yet"
             } );
         } else {
@@ -37,7 +37,7 @@ export const getBrandsDeactivated = async ( req, res ) => {
             }
         } );
         if( brands == '' ) {
-            return res.status(200).json( {
+            return res.status(404).json( {
                 message : "There are not brands deactivated"
             } );
         } else {

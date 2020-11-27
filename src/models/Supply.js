@@ -1,5 +1,7 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../db/db';
+import SupplyBrands from './SupplyBrands';
+import SupplyPrices from './SupplyPrices';
 
 const Supply = sequelize.define( 'supplies', {
     id : {
@@ -20,10 +22,6 @@ const Supply = sequelize.define( 'supplies', {
         type : Sequelize.INTEGER,
         allowNull: false,
     },
-    id_brand : {
-        type : Sequelize.INTEGER,
-        allowNull: false,
-    },
     id_type_supply : {
         type : Sequelize.INTEGER,
         allowNull: false,
@@ -36,5 +34,13 @@ const Supply = sequelize.define( 'supplies', {
     timestamps : true,
     tableName: "Supplies"
 } );
+
+// SupplyBrands Foreign Key
+Supply.hasMany( SupplyBrands, { foreignKey : 'id_supply', sourceKey : 'id' } );
+SupplyBrands.belongsTo( Supply, { foreignKey : 'id_supply', sourceKey : 'id' } );
+
+// SupplyPrices Foreign Key
+Supply.hasMany( SupplyPrices, { foreignKey : 'id_supply', sourceKey : 'id' } );
+SupplyPrices.belongsTo( Supply, { foreignKey : 'id_supply', sourceKey : 'id' } );
 
 export default Supply;

@@ -1,29 +1,28 @@
 'use strict';
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('Prices', {
+    await queryInterface.createTable('SupplyBrands', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      id_provider: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-      },
       id_supply: {
         type: Sequelize.INTEGER,
-        allowNull: false,
         references: {
           model: 'Supplies',
           key: 'id', 
           as: 'id_supply'
         }
       },
-      price: {
-        type: Sequelize.DECIMAL,
-        allowNull: false,
+      id_brand: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: 'Brands',
+          key: 'id', 
+          as: 'id_brand'
+        }
       },
       active: {
         type: Sequelize.BOOLEAN
@@ -39,6 +38,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('Prices');
+    await queryInterface.dropTable('SupplyBrands');
   }
 };

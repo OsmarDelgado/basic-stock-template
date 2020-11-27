@@ -12,43 +12,23 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       Supply.belongsTo(models.UnitMeasure, {
-        foreignKey: 'id_unit_measure',
+        foreignKey : 'id_unit_measure'
       });
 
       Supply.belongsTo(models.Category, {
-        foreignKey: 'id_category',
-      });
-
-      Supply.belongsTo(models.Brand, {
-        foreignKey: 'id_brand',
+        foreignKey : 'id_category'
       });
 
       Supply.belongsTo(models.TypeSupply, {
-        foreignKey: 'id_type_supply',
+        foreignKey : 'id_type_supply'
       });
 
-      Supply.hasMany(models.Price, {
-        foreignKey: 'id_supply',
+      Supply.hasMany(models.SupplyPrices, {
+        foreignKey : 'id_supply'
       });
 
-      Supply.belongsTo(models.InputStockSupply, {
-        foreignKey: 'id_input_stock',
-      });
-
-      Supply.belongsTo(models.OutputStockSupply, {
-        foreignKey: 'id_output_stock',
-      });
-
-      Supply.belongsTo(models.AdjustInputStockSupply, {
-        foreignKey: 'id_adjust_input_stock',
-      });
-
-      Supply.belongsTo(models.AdjustOutputStockSupply, {
-        foreignKey: 'id_output_stock',
-      });
-      
-      Supply.hasOne(models.Stock, {
-        foreignKey: 'id_supply',
+      Supply.hasMany(models.SupplyBrands, {
+        foreignKey : 'id_supply'
       });
     }
   };
@@ -56,7 +36,6 @@ module.exports = (sequelize, DataTypes) => {
     name: DataTypes.STRING,
     id_unit_measure: DataTypes.INTEGER,
     id_category: DataTypes.INTEGER,
-    id_brand: DataTypes.INTEGER,
     id_type_supply: DataTypes.INTEGER,
     active: DataTypes.BOOLEAN
   }, {

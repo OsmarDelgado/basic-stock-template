@@ -10,7 +10,7 @@ export const getUnitMeasures = async ( req, res ) => {
             }
         } );
         if( unit_measures == '' ) {
-            return res.status(200).json( {
+            return res.status(404).json( {
                 message : "There are not unit measure yet"
             } );
         } else {
@@ -37,7 +37,7 @@ export const getUnitMeasuresDeactivated = async ( req, res ) => {
             }
         } );
         if( unit_measures == '' ) {
-            return res.status(200).json( {
+            return res.status(404).json( {
                 message : "There are not unit measures deactivated"
             } );
         } else {
