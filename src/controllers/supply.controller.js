@@ -131,22 +131,25 @@ export const createSupply = async ( req, res ) => {
                 fields : [ 'name', 'id_unit_measure', 'id_category', 'id_type_supply', 'active' ]
             } );
 
-            ids_brands.forEach( async (ids_brand) => {
+            const relations = ids_brands.forEach( async ( ids_brand ) => {
                 const newSupplyBrands = await SupplyBrands.create( {
                     id_supply : newSupply.id,
                     id_brand : ids_brand.id
                 }, {
                     fields : [ 'id_supply' ,'id_brand', 'active' ]
                 } );
-            });
+            } );
+
+            const newSupplyId = newSupply.id;
 
             const supplyBrands = await SupplyBrands.findAll( {
                 where : {
-                    id_supply : newSupply.id
+                    id_supply : newSupplyId
+                    // id_supply : 44
                 }
             } );
 
-            console.log(supplyBrands);
+            console.log(`Supply Brands: ${ supplyBrands }`);
             
             if( newSupply ) {
                 return res.status(201).json( {
