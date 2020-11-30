@@ -1,4 +1,5 @@
 import Supply from '../models/Supply';
+import Brand from '../models/Brand';
 import SupplyBrands from '../models/SupplyBrands';
 import SupplyPrices from '../models/SupplyPrices';
 
@@ -82,18 +83,34 @@ export const getSupplyById = async ( req, res ) => {
 // Create a Supply
 export const createSupply = async ( req, res ) => {
     // res.send( 'Create a supply' );
-    const { name, id_unit_measure, id_category, id_brand, id_type_supply } = req.body;
+    const { name, id_unit_measure, id_category, id_type_supply } = req.body;
+    const { id_brand } = req.body;
+    const id_brands = JSON.stringify(id_brand);
+    const ids_brands = JSON.parse(id_brands);
+
+    // ids_brands.forEach( (ids_brand) => {
+    //     console.log(ids_brand.id);
+    // });
+
+    // res.send('Hello');
+
     try {
         const supply = Supply.findOne( {
-            attributes : [ 'name', 'id_unit_measure', 'id_category', 'id_brand', 'id_type_supply' ],
+            attributes : [ 'name', 'id_unit_measure', 'id_category', 'id_type_supply' ],
             where : {
                 name,
                 id_unit_measure,
                 id_category,
-                id_brand,
                 id_type_supply
             }
         } );
+        
+        // const brands = await Brand.findAll( {
+        //     where : {
+        //         id : id_brand
+        //     }
+        // } );
+
         if( supply && supply.active === true ) {
             return res.status(409).json( {
                 message : "Supply does exist",
@@ -109,16 +126,35 @@ export const createSupply = async ( req, res ) => {
                 name,
                 id_unit_measure,
                 id_category,
-                id_brand,
                 id_type_supply
             }, {
-                fields : [ 'name', 'id_unit_measure', 'id_category', 'id_brand', 'id_type_supply' ]
+                fields : [ 'name', 'id_unit_measure', 'id_category', 'id_type_supply', 'active' ]
             } );
-    
+
+            ids_brands.forEach( async (ids_brand) => {
+                const newSupplyBrands = await SupplyBrands.create( {
+                    id_supply : newSupply.id,
+                    id_brand : ids_brand.id
+                }, {
+                    fields : [ 'id_supply' ,'id_brand', 'active' ]
+                } );
+            });
+
+            const supplyBrands = await SupplyBrands.findAll( {
+                where : {
+                    id_supply : newSupply.id
+                }
+            } );
+
+            console.log(supplyBrands);
+            
             if( newSupply ) {
                 return res.status(201).json( {
                     message : "Supply created succesfully",
-                    data : newSupply
+                    data : {
+                        newSupply,
+                        supplyBrands
+                    }
                 } );
             }
         }
