@@ -17,12 +17,25 @@ export const getSupplies = async ( req, res ) => {
                 message : "There are not supplies yet"
             } );
         } else {
+            for( let i in supplies ) {
+                const supplyBrands = await SupplyBrands.findAll( {
+                    where : {
+                        id_supply : supplies[i].id,
+                        active : true
+                    }
+                } );
+                // console.log(supplyBrands);
+            }
             return res.status(200).json( {
                 message : "Supplies",
-                data : supplies
+                data : {
+                    supplies,
+                    // supplyBrands
+                }
             } );
         }
     } catch (error) {
+        console.log(error);
         return res.status(500).json( {
             message : "Somenthing was wrong",
             data : {}
@@ -43,6 +56,15 @@ export const getSuppliesDeactivated = async ( req, res ) => {
                 message : "There are not supplies deactivated"
             } );
         } else {
+            for( let i in supplies ) {
+                const supplyBrandsDeactivated = await SupplyBrands.findAll( {
+                    where : {
+                        id_supply : supplies[i].id,
+                        active : false
+                    }
+                } );
+                // console.log(supplyBrands);
+            }
             return res.status(200).json( {
                 message : "Suppplies deactivated",
                 data : supplies
@@ -66,11 +88,19 @@ export const getSupplyById = async ( req, res ) => {
             active : true
         }
     } );
-    
+    const supplyBrands = await SupplyBrands.findAll( {
+        where : {
+            id_supply,
+            active : true
+        }
+    } );
     if( supply != null ) {
         return res.status(200).json( {
             message : "Supply",
-            data : supply
+            data : {
+                supply,
+                supplyBrands
+            }
         } );
     } else {
         return res.status(404).json( {
@@ -88,28 +118,13 @@ export const createSupply = async ( req, res ) => {
     const id_brands = JSON.stringify(id_brand);
     const ids_brands = JSON.parse(id_brands);
 
-    // ids_brands.forEach( (ids_brand) => {
-    //     console.log(ids_brand.id);
-    // });
-
-    // res.send('Hello');
-
     try {
-        const supply = Supply.findOne( {
-            attributes : [ 'name', 'id_unit_measure', 'id_category', 'id_type_supply' ],
+        const supply = await Supply.findOne( {
+            attributes : [ 'name', 'id_unit_measure', 'id_category', 'id_type_supply', 'active' ],
             where : {
-                name,
-                id_unit_measure,
-                id_category,
-                id_type_supply
+                name
             }
         } );
-        
-        // const brands = await Brand.findAll( {
-        //     where : {
-        //         id : id_brand
-        //     }
-        // } );
 
         if( supply && supply.active === true ) {
             return res.status(409).json( {
@@ -131,21 +146,27 @@ export const createSupply = async ( req, res ) => {
                 fields : [ 'name', 'id_unit_measure', 'id_category', 'id_type_supply', 'active' ]
             } );
 
-            const relations = ids_brands.forEach( async ( ids_brand ) => {
+            for( let i in ids_brands ) {
                 const newSupplyBrands = await SupplyBrands.create( {
                     id_supply : newSupply.id,
-                    id_brand : ids_brand.id
+                    id_brand : ids_brands[i].id
                 }, {
                     fields : [ 'id_supply' ,'id_brand', 'active' ]
                 } );
-            } );
+            }
 
-            const newSupplyId = newSupply.id;
-
+            // ids_brands.forEach( async ( ids_brand ) => {
+            //     const newSupplyBrands = await SupplyBrands.create( {
+            //         id_supply : newSupply.id,
+            //         id_brand : ids_brand.id
+            //     }, {
+            //         fields : [ 'id_supply' ,'id_brand', 'active' ]
+            //     } );
+            // } );
+            
             const supplyBrands = await SupplyBrands.findAll( {
                 where : {
-                    id_supply : newSupplyId
-                    // id_supply : 44
+                    id_supply : newSupply.id
                 }
             } );
 
@@ -174,11 +195,14 @@ export const createSupply = async ( req, res ) => {
 export const updateSupply = async ( req, res ) => {
     // res.send( 'Update a supply' );
     const { id_supply } = req.params;
-    const { name, id_unit_measure, id_category, id_brand, id_type_supply } = req.body;
+    const { name, id_unit_measure, id_category, id_type_supply } = req.body;
+    const { id_brand } = req.body;
+    const id_brands = JSON.stringify(id_brand);
+    const ids_brands = JSON.parse(id_brands);
 
     try {
         const supply = await Supply.findOne( {
-            attributes : [ 'name', 'id_unit_measure', 'id_category', 'id_brand', 'id_type_supply' ],
+            attributes : [ 'name', 'id_unit_measure', 'id_category', 'id_type_supply' ],
             where : {
                 id : id_supply,
                 active : true
@@ -195,18 +219,37 @@ export const updateSupply = async ( req, res ) => {
                 name,
                 id_unit_measure,
                 id_category,
-                id_brand,
                 id_type_supply
             }, {
-                attributes : [ 'name', 'id_unit_measure', 'id_category', 'id_brand', 'id_type_supply' ],
+                attributes : [ 'name', 'id_unit_measure', 'id_category', 'id_type_supply' ],
                 where : {
                     id : id_supply
                 }
             } );
+        
+            for( let i in ids_brands ) {
+                const updatingSupplyBrands = await SupplyBrands.update( {
+                    id_brand : ids_brands[i].id
+                }, {
+                    attributes : [ 'id_brand' ],
+                    where : {
+                        id_supply
+                    }
+                } );
+            }
+
+            const updateSupplyBrands = await SupplyBrands.findAll( {
+                where : {
+                    id_supply : supply
+                }
+            } );
     
-            return res.status(204).json( {
+            return res.status(200).json( {
                 message : "Supply updated succesfully",
-                data : updateSupply
+                data : {
+                    updateSupply,
+                    updateSupplyBrands
+                }
             } );
         }
     } catch (error) {
