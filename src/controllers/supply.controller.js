@@ -1,3 +1,4 @@
+const { Op } = require("sequelize");
 import Supply from '../models/Supply';
 import Brand from '../models/Brand';
 import SupplyBrands from '../models/SupplyBrands';
@@ -226,23 +227,45 @@ export const updateSupply = async ( req, res ) => {
                     id : id_supply
                 }
             } );
-        
+
+            const supplyBrandsToUpdate = await SupplyBrands.findAll( {
+                where : {
+                    id_supply
+                }
+            } );
+            // for(let i in supplyBrandsToUpdate) {
+            //     console.log( supplyBrandsToUpdate[i].id );
+            //     console.log( supplyBrandsToUpdate[i].id_brand );
+            //     console.log( supplyBrandsToUpdate[i].id_supply );
+            // }
+
             for( let i in ids_brands ) {
-                const updatingSupplyBrands = await SupplyBrands.update( {
-                    id_brand : ids_brands[i].id
-                }, {
-                    attributes : [ 'id_brand' ],
-                    where : {
-                        id_supply
-                    }
-                } );
+                for( let j in supplyBrandsToUpdate ) {
+                    console.log(ids_brands[i].id);
+                    console.log(supplyBrandsToUpdate[j].id_brand);
+                    const updatingSupplyBrands = await SupplyBrands.update( {
+                        id_brand : ids_brands[i].id
+                    }, {
+                        attributes : [ 'id_brand' ],
+                        where : {
+                            id_supply,
+                            id_brand : supplyBrandsToUpdate[j].id_brand
+                            
+                        }
+                    } );
+                }
             }
 
             const updateSupplyBrands = await SupplyBrands.findAll( {
                 where : {
-                    id_supply : supply
+                    id_supply
                 }
             } );
+            // for(let i in updateSupplyBrands) {
+            //     console.log( updateSupplyBrands[i].id );
+            //     console.log( updateSupplyBrands[i].id_brand );
+            //     console.log( updateSupplyBrands[i].id_supply );
+            // }
     
             return res.status(200).json( {
                 message : "Supply updated succesfully",
