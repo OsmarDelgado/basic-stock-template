@@ -198,9 +198,6 @@ export const updateSupply = async ( req, res ) => {
     const { id_supply } = req.params;
     const { name, id_unit_measure, id_category, id_type_supply } = req.body;
     const { id_brand } = req.body;
-    const id_brands = JSON.stringify(id_brand);
-    const ids_brands = JSON.parse(id_brands);
-
     try {
         const supply = await Supply.findOne( {
             attributes : [ 'name', 'id_unit_measure', 'id_category', 'id_type_supply' ],
@@ -210,12 +207,12 @@ export const updateSupply = async ( req, res ) => {
             }
         } );
 
-        if( name === supply.name ) {
-            return res.status(409).json( {
-                message : "Supply does exist",
-                data : supply
-            } );
-        } else {
+        // if( name === supply.name ) {
+        //     return res.status(409).json( {
+        //         message : "Supply does exist",
+        //         data : supply
+        //     } );
+        // } else {
             const updateSupply = await Supply.update( {
                 name,
                 id_unit_measure,
@@ -227,24 +224,26 @@ export const updateSupply = async ( req, res ) => {
                     id : id_supply
                 }
             } );
-
+            const id_brands = id_brand.map( (id_obj) => {
+                return id_obj.id;
+            } );
             const supplyBrandsToUpdate = await SupplyBrands.findAll( {
                 where : {
                     id_supply
                 }
             } );
+            console.log(supplyBrandsToUpdate);
+            //return res.send('Hello :3');
             // for(let i in supplyBrandsToUpdate) {
             //     console.log( supplyBrandsToUpdate[i].id );
             //     console.log( supplyBrandsToUpdate[i].id_brand );
             //     console.log( supplyBrandsToUpdate[i].id_supply );
             // }
 
-            for( let i in ids_brands ) {
+            for( let i in id_brand ) {
                 for( let j in supplyBrandsToUpdate ) {
-                    console.log(ids_brands[i].id);
-                    console.log(supplyBrandsToUpdate[j].id_brand);
                     const updatingSupplyBrands = await SupplyBrands.update( {
-                        id_brand : ids_brands[i].id
+                        id_brand : id_brand[i].id
                     }, {
                         attributes : [ 'id_brand' ],
                         where : {
@@ -266,7 +265,7 @@ export const updateSupply = async ( req, res ) => {
             //     console.log( updateSupplyBrands[i].id_brand );
             //     console.log( updateSupplyBrands[i].id_supply );
             // }
-    
+            
             return res.status(200).json( {
                 message : "Supply updated succesfully",
                 data : {
@@ -274,7 +273,7 @@ export const updateSupply = async ( req, res ) => {
                     updateSupplyBrands
                 }
             } );
-        }
+        // }
     } catch (error) {
         console.log(error);
         return res.status(500).json( {
